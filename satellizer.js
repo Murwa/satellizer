@@ -254,6 +254,10 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
             return oauth.authenticate(name, userData);
           };
 
+          $auth.contacts = function (name, userData) {
+            return oauth.contacts(name, false, userData)
+          }
+
           $auth.link = function(name, userData) {
             return oauth.authenticate(name, userData);
           };
@@ -439,6 +443,22 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           opts.withCredentials = opts.withCredentials || config.withCredentials;
 
           return $http(opts);
+        };
+
+        // Don't take a token, just auth and get the data back
+        oauth.contacts = function(name, redirect, userData) {
+          var provider = config.providers[name].type === '1.0' ? new Oauth1() : new Oauth2();
+          var deferred = $q.defer();
+
+          provider.open(config.providers[name], userData || {})
+              .then(function(response) {
+                deferred.resolve(response);
+              })
+              .catch(function(error) {
+                deferred.reject(error);
+              });
+
+          return deferred.promise;
         };
 
         return Oauth;

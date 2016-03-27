@@ -17,7 +17,7 @@ node_modules
 bower_components
 
 # Editors
-.idea
+/.idea
 *.iml
 
 # OS metadata
