@@ -446,7 +446,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         };
 
         // Don't take a token, just auth and get the data back
-        oauth.contacts = function(name, redirect, userData) {
+        Oauth.contacts = function(name, redirect, userData) {
           var provider = config.providers[name].type === '1.0' ? new Oauth1() : new Oauth2();
           var deferred = $q.defer();
 
